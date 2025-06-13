@@ -77,12 +77,24 @@ class AnimeHub:
             studios.append(studio)
 
         return {"studios": studios}
-
-
+    
+    
+    def formated_anime_data_by_id(self, id:str) -> dict:
+        data = self.get_anime_by_id(id)
+        return {
+            "title": data.get("nameUa"),
+            "title_en": data.get("nameEn"),
+            "release_date": data.get("createdAt"),
+            "year": data.get("year"),
+            "studios": ", ".join([team.get("team", {}).get("name") for team in data.get("teams", [])]),
+            "episode": data.get("dubbedEpisodes"),
+            "link": f"{self.host}/anime/{data.get('slug')}",
+        }
 anime = AnimeHub()
 
 #data = anime.get_anime_by_id("7bda84c3-61e1-4436-a58b-1972a94c77c0")
 #data = anime.get_anime_by_url("https://animehub.land/anime/monolog-travnici-2")
 #data = anime.get_episodes_by_id("7bda84c3-61e1-4436-a58b-1972a94c77c0")
-data = anime.gen_playlist_by_id("7bda84c3-61e1-4436-a58b-1972a94c77c0")
+#data = anime.gen_playlist_by_id("7bda84c3-61e1-4436-a58b-1972a94c77c0")
+data = anime.formated_anime_data_by_id("7bda84c3-61e1-4436-a58b-1972a94c77c0")
 print(data)
