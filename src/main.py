@@ -20,6 +20,16 @@ class AnimeHub:
         self.host = host if host else 'https://api.animehub.land'
 
 
+    def get_anime_id_by_slug(self, slug:str) -> str:
+        url = f'https://api.animehub.land/api/v1/cinema/anime/{slug}/uuid'
+        response = requests.get(url, headers=self.headers)
+        if response.status_code == 200:
+            data = response.json()
+            return data.get("id")
+        else:
+            print(response.status_code)
+            return None
+
     def get_anime_list(self):
         return
 
@@ -92,9 +102,11 @@ class AnimeHub:
         }
 anime = AnimeHub()
 
-#data = anime.get_anime_by_id("7bda84c3-61e1-4436-a58b-1972a94c77c0")
+#data = anime.get_anime_by_id("99db7135-dc53-4f6b-8ff4-9acf42a2e6a1")
 #data = anime.get_anime_by_url("https://animehub.land/anime/monolog-travnici-2")
 #data = anime.get_episodes_by_id("7bda84c3-61e1-4436-a58b-1972a94c77c0")
 #data = anime.gen_playlist_by_id("7bda84c3-61e1-4436-a58b-1972a94c77c0")
-data = anime.formated_anime_data_by_id("7bda84c3-61e1-4436-a58b-1972a94c77c0")
-print(data)
+#data = anime.formated_anime_data_by_id("7bda84c3-61e1-4436-a58b-1972a94c77c0")
+#data_id = anime.get_anime_id_by_slug("monolog-travnici-2")
+#data = anime.gen_playlist_by_id(data_id)
+#print(data)
